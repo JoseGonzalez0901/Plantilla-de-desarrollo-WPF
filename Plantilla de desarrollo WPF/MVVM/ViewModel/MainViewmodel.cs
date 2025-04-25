@@ -9,9 +9,40 @@ namespace Plantilla_de_desarrollo_WPF.MVVM.ViewModel
 {
     class MainViewmodel:ObservableObject
     {
+        public RelayCommand HomeViewCommand { get; set; }
+        public RelayCommand DiscoveryViewCommand { get; set; }
+        public HomeViewModel HomeViewModel { get; set; }
+        public DiscoveryViewModel DiscoveryViewModel { get; set; }
+
+        private object _currentView;
+        public object CurrentView
+        {
+            get { return _currentView; }
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged();
+            }
+        }
         public MainViewmodel()
         {
-            
+            HomeViewModel = new HomeViewModel();
+            DiscoveryViewModel = new DiscoveryViewModel();
+            CurrentView=HomeViewModel;
+
+            HomeViewCommand = new RelayCommand(o =>
+            {
+
+                CurrentView = HomeViewModel;
+            }
+            );
+            DiscoveryViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = DiscoveryViewModel;
+            }
+            );
         }
-    }
+
+        }
 }
+
