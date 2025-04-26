@@ -9,10 +9,10 @@ namespace Plantilla_de_desarrollo_WPF.MVVM.ViewModel
 {
     class MainViewmodel:ObservableObject
     {
-        public RelayCommand HomeViewCommand { get; set; }
-        public RelayCommand DiscoveryViewCommand { get; set; }
-        public HomeViewModel HomeViewModel { get; set; }
-        public DiscoveryViewModel DiscoveryViewModel { get; set; }
+        public RelayCommand LoginViewCommand { get; set; }
+        public RelayCommand LayoutViewCommand { get; set; }
+        public LoginViewModel LoginViewModel { get; set; }
+        public LayoutViewModel LayoutViewModel { get; set; }
 
         private object _currentView;
         public object CurrentView
@@ -26,21 +26,19 @@ namespace Plantilla_de_desarrollo_WPF.MVVM.ViewModel
         }
         public MainViewmodel()
         {
-            HomeViewModel = new HomeViewModel();
-            DiscoveryViewModel = new DiscoveryViewModel();
-            CurrentView=HomeViewModel;
-
-            HomeViewCommand = new RelayCommand(o =>
+            LayoutViewModel = new LayoutViewModel();
+            LoginViewModel = new LoginViewModel(this);
+            CurrentView = LoginViewModel;
+            LoginViewCommand = new RelayCommand(o =>
             {
-
-                CurrentView = HomeViewModel;
+                CurrentView = LoginViewModel;
             }
             );
-            DiscoveryViewCommand = new RelayCommand(o =>
+            LayoutViewCommand = new RelayCommand(o =>
             {
-                CurrentView = DiscoveryViewModel;
+                CurrentView = LayoutViewModel;
             }
-            );
+            );  
         }
 
         }
