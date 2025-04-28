@@ -11,6 +11,9 @@ namespace Plantilla_de_desarrollo_WPF.MVVM.ViewModel
     {
         public RelayCommand LoginViewCommand { get; set; }
         public RelayCommand LayoutViewCommand { get; set; }
+        public RelayCommand RegiserViewCommand { get; set; }
+
+        public RegisterViewModel RegisterViewModel { get; set; }
         public LoginViewModel LoginViewModel { get; set; }
         public LayoutViewModel LayoutViewModel { get; set; }
 
@@ -28,7 +31,13 @@ namespace Plantilla_de_desarrollo_WPF.MVVM.ViewModel
         {
             LayoutViewModel = new LayoutViewModel();
             LoginViewModel = new LoginViewModel(this);
+            RegisterViewModel = new RegisterViewModel(this);
             CurrentView = LoginViewModel;
+
+            RegiserViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = RegisterViewModel;
+            });
             LoginViewCommand = new RelayCommand(o =>
             {
                 CurrentView = LoginViewModel;

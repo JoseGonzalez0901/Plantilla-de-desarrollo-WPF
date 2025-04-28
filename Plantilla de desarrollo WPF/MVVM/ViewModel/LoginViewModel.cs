@@ -24,39 +24,36 @@ namespace Plantilla_de_desarrollo_WPF.MVVM.ViewModel
         }
         public ICommand LoginCommand { get; }
 
+        public ICommand RegisterCommand { get; }
+
         public LoginViewModel(MainViewmodel mainViewModel)
         {
             LoginCommand = new RelayCommand(ExecuteLogin);
             _mainViewModel = mainViewModel;
+            RegisterCommand = new RelayCommand(o =>
+            {
+                _mainViewModel.CurrentView = _mainViewModel.RegisterViewModel;
+            });
+            
         }
 
         private void ExecuteLogin(object parameter)
         {
-            AppDbContext context = new AppDbContext();
-            DatabaseManager<LoginDBService> dbManager = new DatabaseManager<LoginDBService>(context);
 
-           if(Username == null || Password == null)
+
+           if(Username == null || Password == null|| Username == "" || Password == "")
             {
                 System.Windows.MessageBox.Show("Por favor, ingrese su usuario y contraseña.");
                 return;
             }
-            LoginDBService user = dbManager.GetById(int.Parse(Username));
+           
 
-            // Aquí puedes poner lógica real de autenticación
-            if(user==null)
-            {
-                System.Windows.MessageBox.Show("Usuario no encontrado");
-                return;
-            }
-            else if (user.Clave == Password)
+            LoginDBService loginDBService = new LoginDBService();
+            if(loginDBService.LoginUser(int.Parse(Username),Password))
             {
                 _mainViewModel.CurrentView = _mainViewModel.LayoutViewModel;
             }
-            else
-            {
-                // Aquí puedes mostrar un mensaje de error o realizar alguna acción si la autenticación falla
-                System.Windows.MessageBox.Show("Contraseña incorrecta");
-            }
+
         }
     }
 }
